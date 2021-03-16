@@ -1,0 +1,19 @@
+﻿@model RestApp.Models.Table
+@{
+    ViewData["Title"] = "Välj bord";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Välj bord</h1>
+
+    <form asp-action="ChooseTable">
+        <div class="form-group">
+            <label asp-for="TableName" class="control-label"></label>
+            <select asp-for="TableName" class="form-control w-25 mx-auto" asp-items="ViewBag.TableName"></select>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Välj" class="btn btn-primary" />
+        </div>
+    </form>
+
+</div>

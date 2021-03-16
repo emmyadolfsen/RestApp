@@ -1,0 +1,43 @@
+﻿@model RestApp.Models.Product
+
+@{
+    ViewData["Title"] = "Beskrivning";
+}
+
+<h1>@Html.DisplayFor(model => model.Name)</h1>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col" colspan="2" class="font-italic font-weight-normal">
+                    @Html.DisplayFor(model => model.Description)
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <th scope="row" class="w-25">
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.Price)
+                </td>
+             </tr>
+            <tr>
+                <th scope="row" class="w-25">
+                    @Html.DisplayNameFor(model => model.Category.CategoryName)
+                </th>
+
+                <td>
+                    @Html.DisplayFor(model => model.Category.CategoryName)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <a href="/Home/Menu/@ViewBag.categoryId"><i class="fas fa-angle-double-left"></i> Tillbaks till meny</a>
+</div>

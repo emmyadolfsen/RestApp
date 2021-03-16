@@ -1,0 +1,79 @@
+﻿@model IEnumerable<RestApp.Models.Product>
+@{
+    ViewData["Title"] = "Meny";
+}
+
+    <h2 class="text-center">
+        Restaurang Raggmunk
+    </h2>
+    <div class="menu text-center">
+        @foreach (var c in ViewBag.categories)
+        {
+            <a asp-action="Menu" asp-route-id="@c.Id">@c.CategoryName |</a>
+        }
+    </div>
+
+    <div class="dropdown dropdown-hide">
+        <a class="btn btn-info dropdown-toggle" href="#" aria-label="Meny" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Meny
+        </a>
+
+        <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuLink">
+            @foreach (var c in ViewBag.categories)
+            {
+                <a class="dropdown-item p-4" asp-action="Menu" asp-route-id="@c.Id">@c.CategoryName</a>
+            }
+
+        </div>
+    </div>
+
+    @if (ViewBag.Sommartips == null)
+    {
+<div class="text-center">
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="w-50">
+                    @ViewBag.categoryName
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr class="border-bottom">
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+
+                    <td>
+                        <a class="btn btn-info m-0" asp-action="Create" asp-route-id="@item.Id">Lägg till</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+    }
+    else
+    {
+        <div class="text-center mt-3">
+
+            <hr />
+            <p>Vår meny är en asiatisk-svensk fusion med betoning på säsong.</p>
+            <img src="~/images/food.jpg" class="img-fluid w-75 rounded" alt="Dumplings på en skärbräda" />
+        </div>
+
+
+    }

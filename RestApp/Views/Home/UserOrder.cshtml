@@ -1,0 +1,69 @@
+﻿@model IEnumerable<RestApp.Models.OrderItem>
+@using Microsoft.AspNetCore.Http;
+
+@{
+    ViewData["Title"] = "Din beställning";
+}
+
+<h1>Din beställning</h1>
+@if (ViewData["checkOrderNr"] == null)
+{
+    <p>Gå till menyn för att börja beställa!</p>
+}
+else
+{
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product.Price)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+
+                        @Html.DisplayFor(modelItem => item.Product.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.Price)
+                    </td>
+                    <td>
+                        <a class="btn btn-info" asp-action="Delete" asp-route-id="@item.Id">Ta bort</a>
+                    </td>
+                </tr>
+            }
+
+            <tr>
+                <td>
+                </td>
+                <td>
+                    Totalt:
+                </td>
+                <td>
+                    @ViewData["totPrice"]
+                </td>
+                <td>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    @if ((Context.Session.GetString("EatAt")) != "TakeAway")// Kolla om det är en takeaway beställning
+    {
+        <a class="btn btn-info" asp-action="SendOrder">Skicka beställning</a>
+    }
+    else if ((Context.Session.GetString("EatAt")) == "TakeAway")// Kolla om det är en takeaway beställning
+    {
+        <a class="btn btn-info" asp-action="SendOrder">Betala och skicka beställning</a>
+    }
+
+}

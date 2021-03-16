@@ -1,0 +1,135 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+
+/* Emmys styles
+-------------------------------------------------- */
+.index-h3 {
+    font-size: 1.8em;
+}
+.index-h2 {
+    font-size: 2.8em;
+}
+.hr-width-50 {
+    width: 50%;
+}
+
+@media screen and (min-width: 575px) {
+    .admin-width {
+        width: 35%;
+    }
+
+    .dropdown-hide {
+        display: none;
+    }
+
+    .menu {
+        display: block;
+        padding: 1rem 0;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+
+    h3 {
+        font-size: 1.2em;
+    }
+    .cart-small-screen {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 575px) {
+
+    .menu, .menu-div-hide {
+        display: none;
+    }
+
+    .admin-width {
+        width: 100%;
+    }
+    .cart-big-screen {
+        display: none;
+    }
+    .dropdown-item {
+        font-size: 1.5rem;
+    }
+    .nav-link, .index-link {
+        font-size: 1.3rem;
+    }
+
+}

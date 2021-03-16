@@ -1,0 +1,123 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Http
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @if ((SignInManager.IsSignedIn(User)) && (user.Email == "emmy.adolfsen@gmail.com")) // Använd endast om användare är inloggad som admin
+    {
+        <meta http-equiv="refresh" content="120">
+    }
+        <title>@ViewData["Title"]</title>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <script src="https://kit.fontawesome.com/b6e3e8ac22.js" crossorigin="anonymous"></script>
+
+    </head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+
+                <button class="navbar-toggler" type="button" aria-label="Huvudmeny" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1 pt-2">
+                        @if ((SignInManager.IsSignedIn(User) && (Context.Session.GetString("EatAt")) != null)) // Visa endast om användare är inloggad
+                        {
+                            <li class="nav-item p-2">
+                                <a class="nav-link text-dark" href="/Meny">Meny</a>
+                            </li>
+                        }
+
+                        @if ((SignInManager.IsSignedIn(User) && (Context.Session.GetString("orderNr")) != null)) //Visa endast om en session är startad
+                        {
+                            <li class="nav-item p-2">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="UserOrder">
+                                    <div class="cart-big-screen">
+                                        <i class="fas fa-shopping-cart"></i>
+                                        <span class="badge badge-light">
+                                            @{
+                                                string OrderItemCount = Context.Session.GetString("OrderItemCount");
+                                            }
+                                            @OrderItemCount
+                                        </span>
+                                    </div>
+                                    <div class="cart-small-screen">
+                                        Din beställning
+                                    </div>
+
+
+                                </a>
+
+                            </li>
+                        }
+                        @if ((SignInManager.IsSignedIn(User) && (Context.Session.GetString("PendingOrder")) != null)) // Visa endast om användare är inloggad och om det finns obetalda ordrar
+                        {
+                            <li class="nav-item p-2">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="PayOrder">Betala</a>
+                            </li>
+                        }
+
+
+
+                        @if ((SignInManager.IsSignedIn(User)) && (user.Email == "emmy.adolfsen@gmail.com")) // Visa endast om användare är inloggad som admin
+                        {
+                            <li class="nav-item p-2">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="OrderItem" asp-action="OrderList">BeställningsLista</a>
+                            </li>
+                            <li class="nav-item p-2">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Admin">Admin</a>
+                            </li>
+                        }
+
+
+
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+                <div class="cart-small-screen">
+                    @if ((SignInManager.IsSignedIn(User) && (Context.Session.GetString("orderNr")) != null)) //Visa endast om en session är startad
+                    {
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="UserOrder">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="badge badge-light">
+                                @{
+                                    string OrderItemCount = Context.Session.GetString("OrderItemCount");
+                                }
+                                @OrderItemCount
+                            </span>
+
+                        </a>
+                    }
+                </div>
+
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - <a asp-area="" asp-controller="Home" asp-action="Index">RestApp</a> | @User.Identity.Name
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+

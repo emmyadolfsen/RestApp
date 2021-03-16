@@ -1,0 +1,55 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Http
+@model IEnumerable<RestApp.Models.Product>
+@inject SignInManager<IdentityUser> SignInManager
+@{
+    ViewData["Title"] = "Restaurang Raggmunk";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Restaurang Raggmunk</h1>
+    @if (!SignInManager.IsSignedIn(User)) // Visa endast om användare inte är inloggad
+    {
+        <p>
+            Du måste vara inloggad för att kunna beställa.
+            <br />
+            <a class="nav-link text-info" asp-area="Identity" asp-page="/Account/Login">Logga in</a>
+        </p>
+    }
+    @if (SignInManager.IsSignedIn(User)) // Visa endast om användare är inloggad
+    {
+        @if (Context.Session.GetString("orderNr") == null) //Visa endast om en session inte är startad
+        {
+            <a class="index-link" asp-action="ChooseTable">Äta här |</a>
+            <a class="index-link" asp-action="SetTakeAway"> Take away</a>
+        }
+    }
+</div>
+<div class="text-center mt-5 p-3 bg-light border border-info">
+    <h2 class="index-h2 font-weight-light">Sommarfavoriter</h2>
+    <br />
+    <h3 class="index-h3">Öl</h3>
+    <hr class="hr-width-50"/>
+    @foreach (var item in Model.Where(i => i.CategoryId == 1))
+    {
+        <h4>@Html.DisplayFor(modelItem => item.Name)</h4>
+        <p>@Html.DisplayFor(modelItem => item.Description)</p>
+    }
+    <br />
+    <h3 class="index-h3">Drinkar</h3>
+    <hr class="hr-width-50"/>
+    @foreach (var item in Model.Where(i => i.CategoryId == 7))
+    {
+        <h4>@Html.DisplayFor(modelItem => item.Name)</h4>
+        <p>@Html.DisplayFor(modelItem => item.Description)</p>
+    }
+    <br />
+    <h3 class="index-h3">Alkoholfritt</h3>
+    <hr class="hr-width-50"/>
+    @foreach (var item in Model.Where(i => i.CategoryId == 8))
+    {
+        <h4>@Html.DisplayFor(modelItem => item.Name)</h4>
+        <p>@Html.DisplayFor(modelItem => item.Description)</p>
+    }
+
+</div>

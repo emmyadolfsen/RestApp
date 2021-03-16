@@ -1,0 +1,61 @@
+﻿@model IEnumerable<RestApp.Models.OrderItem>
+
+@{
+    ViewData["Title"] = "Gjorda beställningar";
+}
+
+<h1>Gjorda beställningar</h1>
+<br />
+
+@foreach (var order in ViewBag.orders)
+{
+    <div class="border bg-light p-2 mb-4">
+
+        <table class="table table-sm">
+            <thead class="thead-light">
+                <tr>
+                    <th class="w-75">
+                        @Html.DisplayNameFor(model => model.Product)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Product.Price)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Where(a => a.OrderId == order.Id))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.Price)
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td>
+                        Totalt:
+                    </td>
+                    <td name="pricePerOrder">
+                        @{
+                            // Räkna ihop produkternas summor
+                            int totPrice = 0;
+                            foreach (var item in Model.Where(a => a.OrderId == order.Id))
+                            {
+                                totPrice += item.Product.Price;
+                            }
+                        }
+                        @totPrice
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
+
+<p class="font-weight-bold">
+    Totalt att betala: @ViewData["totalToPay"] kr
+</p>
+<a class="btn btn-info" asp-controller="OrderItem" asp-action="OrderDone">Betala</a>

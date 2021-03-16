@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Betalad";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Tack för att du vill äta hos oss!</h1>
+    <p>
+        Gör en ny <a class="text-info" asp-area="" asp-controller="Home" asp-action="Menu">Beställning</a> eller
+
+        <a class="text-info" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Logga ut</a>
+    </p>
+
+</div>

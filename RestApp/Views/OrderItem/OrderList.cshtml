@@ -1,0 +1,90 @@
+﻿@model IEnumerable<RestApp.Models.OrderItem>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Beställningslista</h1>
+<br />
+
+@foreach (var order in ViewBag.orders) // Loopa orders från viewbag
+{
+    <div class="border bg-light p-2 mb-4">
+        <h2>
+            @if (order.TakeAway == true) // Om bool TakeAway = true - visa takeaway badge
+            {
+                <span class="badge badge-info">TakeAway</span>
+            }
+            else if (order.TakeAway == false) // Om bool TakeAway = false - visa bordsnummer badge
+            {
+                <span class="badge badge-info">Bord @order.Table</span>
+            }
+
+        </h2>
+        <h3>
+            @order.UserEmail - @order.Id
+            @if (order.IsPayed == true) // Om bool IsPayed = true - visa nota klar badge - annars ej betald badge
+            {
+                <span class="badge badge-success">Nota klar</span>
+            }
+            else
+            {
+                <span class="badge badge-danger">EJ betald</span>
+            }
+        </h3>
+
+
+        <table class="table table-sm">
+            <thead class="thead-light">
+                <tr>
+                    <th class="w-75">
+                        @Html.DisplayNameFor(model => model.Product)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Product.Price)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Where(a => a.OrderId == order.Id)) // Loopa produkter från order
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.Price)
+                        </td>
+                    </tr>
+                }
+                <tr class="table-light font-weight-bold">
+                    <td>
+                        Totalt:
+                    </td>
+                    <td>
+                        @{
+                            // Räkna ihop produkternas summor i ordern
+                            int totPrice = 0;
+                            foreach (var item in Model.Where(a => a.OrderId == order.Id))
+                            {
+                                totPrice += item.Product.Price;
+                            }
+                        }
+                        @totPrice
+                    </td>
+                </tr>
+                <tr class="table-light">
+                    <td colspan="2">
+                        @if (order.IsPayed == false) // Visa om order inte är betald
+                        {
+                            <a asp-action="OrderDone" asp-route-id="@order.Id">Ta betalt |</a>
+                        }
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+}
